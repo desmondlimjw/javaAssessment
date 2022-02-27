@@ -4,7 +4,7 @@
 Using Java to create a Student Management System called the StudentGen project.
 
 ### Features
-
+![Screenshot 2022-02-27 at 3 34 33 PM](https://user-images.githubusercontent.com/29788431/155873176-ae128bab-ad04-4aa8-be94-8b9d9d384436.png)
  
 
 
