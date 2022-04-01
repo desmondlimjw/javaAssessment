@@ -2,6 +2,7 @@ package com.generation.service;
 
 import com.generation.model.Course;
 import com.generation.model.Student;
+import com.generation.model.EnrolledCourse;
 
 import java.util.*;
 
@@ -32,41 +33,45 @@ public class StudentService
     public Student findStudent( String studentId )
     {
         //TODO - return studentId (DONE)
-        return students.get(studentId);
+       if (students.containsKey(studentId)) {
+           return students.get(studentId);
+       }
+       return null;
     }
 
     public boolean showSummary()
     {
-        //TODO: use nested for loop to 1) display each Student object (DONE) + 2) use getEnrolledCourses to extract
-        // enrolled courses (To use if statement to check, otherwise print enrolled course using forEach loop) (DONE)
-        if(students.size() == 0) // check if arrayList is empty. return false if it is empty.
-        {
-            return false;
-        }
-        for (Student student : students.values()) //outer loop: forEach to print values (Student object) from students
-            // HashMap
-            {
+        if (students.size() != 0) {
+            for (Student student : students.values()) {
                 System.out.println(student);
 
-            if(student.getEnrolledCourses().size() == 0) { //Check if student is enrolled in any course. Only execute
-                // the inner loop for those with enrolled courses (continue keyword)
-                continue;
-            }
-                System.out.println("Enrolled course(s): ");
-                for (Course course : student.getEnrolledCourses().values()) //inner loop: print values (Course object) from
-                // enrolledCourses HashMap
-                {
-                    System.out.println(course);
+                //Show courses enrolled per student
+                System.out.println( "Enrolled Courses: " );
+                List<Course> course = student.getEnrolledCourses();
+                if (course.size() != 0) {
+                    for (Course mycourse : course) {
+                        System.out.println(mycourse + " Grade: " + student.getGrade(mycourse.getCode()));
+                    }
+                }
+                else {
+                    System.out.println("No course enrolled for this student");
                 }
             }
-        return true;
+            return true;
+        }
+        return false;
     }
 
     public void enrollToCourse( String studentId, Course course )
     {
-        //TODO - enroll student to the course with the studentId and course passed in as the parameters (DONE)
-        findStudent(studentId).enrollToCourse(course);
+        if ( students.containsKey( studentId ) )
+        {
+            //Get the student object based on the studentId - 111
+            Student student =  students.get( studentId );
+            //enrollToCourse is a method in the student Class, pass in the course
+            // object for enrollment
+            student.enrollToCourse(course);
+        }
     }
-
 
 }

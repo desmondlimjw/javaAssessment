@@ -1,11 +1,10 @@
 package com.generation.model;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public interface Evaluation
 {
-    Map<String, Course> findPassedCourses();
+    List<Course> findPassedCourses();
 
-    Map<String, Course> getEnrolledCourses();
+    List<Course> getEnrolledCourses();
 }

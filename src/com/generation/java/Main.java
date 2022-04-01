@@ -86,6 +86,9 @@ public class Main
         {
             System.out.println( "Student Found: " );
             System.out.println( student );
+        } else
+        {
+            System.out.println("No student found.");
         }
     }
 
@@ -134,27 +137,29 @@ public class Main
 
     private static void gradeStudent( StudentService studentService, Scanner scanner )
     {
-
+        //Get Student object from the input and print out all the enrolled courses
         Student student = getStudentInformation( studentService, scanner );
         System.out.println( "Enrolled course:" );
 
         //TODO - 1. Use forEach to display values of getEnrolledCourses HashMap
-        for(Course course : student.getEnrolledCourses().values()) {
+        for(Course course : student.getEnrolledCourses()) {
             System.out.println(course.toString());
         }
 
         //TODO - 2. Prompt user for courseId and store it in a string
         System.out.println( "Insert courseID to be graded:" );
         String courseId = scanner.next();
-
-        //TODO - 3. Prompt user to key in grade (String), convert it into float and store it in variable
-        System.out.println("Insert course grade for: ");
-        String gradeRaw = scanner.next(); //accept user input as string
-        float grade = Float.parseFloat(gradeRaw); //declare float variable and store parsed user input as float
-
-        //TODO - 4. Use setGrade method to store the courseId and grade in the gradedCourses HashMap
-        student.setGrade(courseId, grade);
-        System.out.println("Successfully graded.");
+        Course course = student.findCourseById(courseId);
+        if(course == null)
+        {
+            System.out.println("The student is not enrolled to a course with ID: " + courseId);
+        }
+        else {
+            System.out.println("Insert course grade for: ");
+            float courseGrade = scanner.nextFloat();
+            student.setGrade(course.getCode(), courseGrade);
+            System.out.println("Successfully graded.");
+        }
     }
 
     private static void showPassedCourses(StudentService studentService, Scanner scanner )
